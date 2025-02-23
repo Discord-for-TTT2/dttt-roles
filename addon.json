@@ -1,0 +1,17 @@
+{
+  "title": "Discord for TTT2 - Items",
+  "description": "",
+  "type": "Weapon",
+  "tags": ["fun"],
+  "ignore": [
+    ".git/*",
+    ".vscode/*",
+    ".gitignore",
+    ".glualint.json",
+    "LICENSE",
+    ".prettierignore",
+    "addon.gma",
+    "README.md",
+    "images/*"
+  ]
+}
