@@ -74,7 +74,7 @@ if SERVER then
   end)
 
   hook.Add("TTT2SpecialRoleSyncing", "MuteRoleSync", function(ply, tbl)
-    if not IsValid(ply) or ply:GetSubRole() ~= ROLE_MUTE then return end
+    if not IsValid(ply) or ply == nil or ply:GetSubRole() ~= ROLE_MUTE then return end
 
     local selection = GetConVar("ttt2_mute_roles"):GetInt()
 
