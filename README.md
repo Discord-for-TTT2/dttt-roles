@@ -17,4 +17,4 @@ The Mute is an innocent who knows stuff but it's hard to share...
   - 0: Team Traitor
   - 1: Team Innocent
   - 2: Anyone
-- `label_ttt2_mute_dmg_scale`: How much damage the mute should deal? (1.0=100%)"
+- `ttt2_mute_dmg_scale`: How much damage the mute should deal? (1.0=100%)"
