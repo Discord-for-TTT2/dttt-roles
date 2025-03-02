@@ -1,7 +1,5 @@
 # Roles for DTTT (Discord for TTT2)
 
-![Icon](https://raw.githubusercontent.com/Discord-for-TTT2/dttt_items/master/images/icon/ttt_discord_muter_dart_128x.png)
-
 Dependencies:
 
 - [TTT2](https://github.com/TTT-2/TTT2/)
