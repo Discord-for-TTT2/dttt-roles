@@ -35,7 +35,6 @@ function ROLE:Initialize()
 end
 
 if SERVER then
-  print("[dttt-roles] Hello it is me the server")
 
   -- hook.Add("TTT2RoleNotSelectable", MuteRoleSelectable, function(roleData)
   --   if roleData.name == "Mute" and not true then
@@ -75,48 +74,43 @@ if SERVER then
   end)
 
   hook.Add("TTT2SpecialRoleSyncing", "MuteRoleSync", function(ply, tbl)
-    print("[dttt-roles] SpecialRoleSyncing")
     if not IsValid(ply) or ply:GetSubRole() ~= ROLE_MUTE then return end
 
     local selection = GetConVar("ttt2_mute_roles"):GetInt()
 
-    print("[dttt-roles] Selection: ", selection)
-
     if selection == 0 then
       -- Reveal all traitors to the mute
-      print("[dttt-roles] Selection Traitor")
       for p in pairs(tbl) do
         local team = p:GetTeam()
         if (team == TEAM_TRAITOR) then
-          print("[dttt-roles] Player", p:Nick())
           tbl[p] = {p:GetSubRole(), team}
         end
       end
     elseif selection == 1 then
       -- Reveal all innocents to the mute
-      print("[dttt-roles] Selection Innocent")
       for p in pairs(tbl) do
         local team = p:GetTeam()
         if (team == TEAM_INNOCENT) then
-          print("[dttt-roles] Player", p:Nick())
           tbl[p] = {p:GetSubRole(), team}
         end
       end
     elseif selection == 2 then
       -- Reveal all roles to the mute
-      print("[dttt-roles] Selection All")
       for p in pairs(tbl) do
-        print("roles", "Player" .. p:Nick())
-        print("[dttt-roles] Player", p:Nick())
         tbl[p] = {p:GetSubRole(), p:GetTeam()}
       end
     end
 
   end)
+
+  hook.Add("PlayerTakeDamage", "MuteDamageScale", function(ent, infl, att, amount, dmginfo)
+    if att:GetSubRole() ~= ROLE_MUTE then return end
+
+    dmginfo:ScaleDamage(GetConVar("ttt2_mute_dmg_scale"):GetFloat())
+  end)
 end
 
 if CLIENT then
-  print("[dttt-roles] Hello it is me the client")
   hook.Add("TTT2ClientRadioCommand", "MuteRoleRadio", function(ply, msgName, msgTarget)
     if not IsValid(ply) or not ply:IsActive() or ply:GetSubRole() ~= ROLE_MUTE then return end
 
@@ -148,6 +142,14 @@ if CLIENT then
         index = index - 1 -- switch from lua 1-based indexing to cvar range 
         cvars.ChangeServerConVar("ttt2_mute_roles", index)
       end
+    })
+
+    form:MakeSlider({
+      serverConvar = "ttt2_mute_dmg_scale",
+      label = "label_ttt2_mute_dmg_scale",
+      min = GetConVar("ttt2_mute_dmg_scale"):GetMin(),
+      max = GetConVar("ttt2_mute_dmg_scale"):GetMax(),
+      decimal = 2
     })
   end
 end
